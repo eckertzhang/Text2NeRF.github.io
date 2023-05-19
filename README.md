@@ -4,12 +4,7 @@ This is the repository that contains source code for the [Text2NeRF Home Page](h
 
 If you find Text2NeRF useful for your work please cite:
 ```
-<!-- @article{zhang2022fdnerf,
-  title={FDNeRF: Few-shot Dynamic Neural Radiance Fields for Face Reconstruction and Expression Editing},
-  author={Zhang, Jingbo and Li, Xiaoyu and Wan, Ziyu and Wang, Can and Liao, Jing},
-  journal={arXiv preprint arXiv:2208.05751},
-  year={2022}
-} -->
+...
 ```
 
 # Website License
