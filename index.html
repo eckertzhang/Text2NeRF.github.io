@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Text2NeRF: Text-Driven 3D Scene Generation with Neural Radiance Fields">
+  <meta name="keywords" content="Text2NeRF, FDNeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text2NeRF: Text-Driven 3D Scene Generation with Neural Radiance Fields</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/EZ.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Text2NeRF: Text-Driven 3D Scene Generation with Neural Radiance Fields</h1>
+          <!-- <h1 class="title is-3">TVCG 2023</h1> -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://eckertzhang.github.io/">Jingbo Zhang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://xiaoyu258.github.io/">Xiaoyu Li</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="http://raywzy.com/">Ziyu Wan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://cassiepython.github.io/">Can Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://liaojing.github.io/html/">Jing Liao</a><sup>1</sup>,</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>City University of Hong Kong,</span>
+            <span class="author-block"><sup>2</sup>Tencent AI Lab</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://youtu.be/mMdCMaqgdtk"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=" "
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                  </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-std1">
+          <img src="./static/video/std1.gif">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- Teaser. -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div>
+        <img src="./static/images/teaser.png" alt="teaser" class="center">
+      </div>
+      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/teaser.mp4"
+                type="video/mp4">
+      </video> -->
+      <h2 class="subtitle has-text">
+         Text2NeRF, a text-driven 3D scene generation framework,
+         combines the neural radiance field (NeRF) and a pre-trained text-to-image 
+         diffusion model to generate diverse view-consistent indoor and outdoor 3D scenes from natural language descriptions.
+      </h2>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body" style="background-color: white;">
+    <div class="container is-max-desktop">
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <video poster="" autoplay controls muted loop playsinline height="70%" width="70%">
+            <source src="./static/video/000_garden.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <video poster="" autoplay controls muted loop playsinline height="70%" width="70%">
+            <source src="./static/video/303_living.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <video poster="" autoplay controls muted loop playsinline height="70%" width="70%">
+            <source src="./static/video/700_cabin.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <video poster="" autoplay controls muted loop playsinline height="70%" width="70%">
+            <source src="./static/video/502_train.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <video poster="" autoplay controls muted loop playsinline height="70%" width="70%">
+            <source src="./static/video/104_bedroom.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+  <!-- <div class="container"> -->
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-four-fifths"> -->
+      <div class="column is-full-width">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Text-driven 3D scene generation is widely applicable to video gaming, film industry, and metaverse 
+            applications that have a large demand for 3D scenes. However, existing text-to-3D generation methods 
+            are limited to producing 3D objects with simple geometries and dreamlike styles that lack realism. 
+            In this work, we present Text2NeRF, which is able to generate a wide range of 3D scenes with complicated 
+            geometric structures and high-fidelity textures purely from a text prompt. To this end, we adopt NeRF 
+            as the 3D representation and leverage a pre-trained text-to-image diffusion model to constrain the 3D 
+            reconstruction of the NeRF to reflect the scene description. Specifically, we employ the diffusion model 
+            to infer the text-related image as the content prior and use a monocular depth estimation method to 
+            offer the geometric prior. Both content and geometric priors are utilized to update the NeRF model. 
+            To guarantee textured and geometric consistency between different views, we introduce a progressive scene 
+            inpainting and updating strategy for novel view synthesis of the scene. Our method requires no additional 
+            training data but only a natural language description of the scene as the input. Extensive experiments 
+            demonstrate that our Text2NeRF outperforms existing methods in producing photo-realistic, multi-view 
+            consistent, and diverse 3D scenes from a variety of natural language prompts. Our code and model will be 
+            available upon acceptance.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <br />
+        <h2 class="title is-3">Pipeline</h2>
+        
+        <div>
+          <img src="./static/images/pipeline.png" alt="method" class="center">
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Overview of our Text2NeRF. Given an input text prompt, we infer an initial view 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mi> I </mi> </mrow> <mrow> <mn> 0 </mn> </mrow> </msub> </math> 
+            and estimate its depth 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mi> D </mi> </mrow> <mrow> <mn> 0 </mn> </mrow> </msub> </math>
+            via a pre-trained diffusion model and a depth estimation model. Then we use the depth image-based rendering (DIBR) to warp the 
+            initial view and its depth map to various views to build the support set 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mi> S </mi> </mrow> <mrow> <mn> 0 </mn> </mrow> </msub> </math>
+            for initializing the neural radiance field (NeRF). Afterward, we design a progressive scene inpainting and updating strategy to 
+            complete missing regions consistently. During each update, we first render the initialized NeRF in a novel view 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <mi> k </mi> </math>
+            to produce the image 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msubsup> <mrow> <mi> I </mi> </mrow> <mrow> <mi> k </mi> </mrow> <mrow> <mi> R </mi> </mrow> </msubsup> </math>
+            and depth 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msubsup> <mrow> <mi> D </mi> </mrow> <mrow> <mi> k </mi> </mrow> <mrow> <mi> R </mi> </mrow> </msubsup> </math>
+            with missing regions. Then, the diffusion model is adopted to generate completed image 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mover> <mrow> <mi> I </mi> </mrow> <mrow> <mo> &#x2227; <!-- logical and --> </mo> </mrow> </mover> </mrow> <mrow> <mi> k </mi> </mrow> </msub> </math>
+            and the depth estimation model is used to predict its depth 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msubsup> <mrow> <mi> D </mi> </mrow> <mrow> <mi> k </mi> </mrow> <mrow> <mi> E </mi> </mrow> </msubsup> </math>
+            . Furthermore, a two-stage depth alignment is implemented on 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msubsup> <mrow> <mi> D </mi> </mrow> <mrow> <mi> k </mi> </mrow> <mrow> <mi> R </mi> </mrow> </msubsup> </math>
+             and 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msubsup> <mrow> <mi> D </mi> </mrow> <mrow> <mi> k </mi> </mrow> <mrow> <mi> E </mi> </mrow> </msubsup> </math>
+            to obtain aligned depth 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mover> <mrow> <mi> D </mi> </mrow> <mrow> <mo> &#x2227; <!-- logical and --> </mo> </mrow> </mover> </mrow> <mrow> <mi> k </mi> </mrow> </msub> </math>
+            . Finally, the support set 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <msub> <mrow> <mi> S </mi> </mrow> <mrow> <mn> k </mn> </mrow> </msub> </math>
+            of view 
+            <math xmlns='http://www.w3.org/1998/Math/MathML'> <mi> k </mi> </math>
+            is added into training data to update NeRF.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="container is-max-desktop">
+        <br />
+        <h2 class="title is-3">Results</h2>
+
+        <h3 class="title is-5" style="text-align:left">3D Scenes Generated from Diverse Prompts</h3>
+        <!-- line 1 -->
+        <table style="width:100%">
+          <tr>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/103_bedroom.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/103_bedroom_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/300_living.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/300_living_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a bedroom with a desk.</p></center></td>
+            <td style="width: 50%;"><center><p>a cozy living room.</p></center></td>
+          </tr>
+        </table>
+        <br />
+        <!-- line 2 -->
+        <table style="width:100%">
+          <tr>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/604_dog.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/604_dog_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/400_bonsai.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/400_bonsai_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a dog playing on the lawn.</p></center></td>
+            <td style="width: 50%;"><center><p>a bonsai on the table.</p></center></td>
+          </tr>
+        </table>
+        <br />
+        <!-- line 3 -->
+        <table style="width:100%">
+          <tr>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/701_cabin.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/701_cabin_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/208_car.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/208_car_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a cabin in the woods.</p></center></td>
+            <td style="width: 50%;"><center><p>a red sports car in a park.</p></center></td>
+          </tr>
+        </table>
+
+
+
+        <br />
+        <h3 class="title is-5" style="text-align:left">Diverse Scenes Generated from Same Prompt</h3>
+        <table style="width:100%">
+          <!-- line 1 -->
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/504_train.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/504_train_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/750_street.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/750_street_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+          <!-- line 2 -->
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/503_train.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/503_train_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/751_street.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/751_street_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a locomotive at the train station.</p></center></td>
+            <td style="width: 50%;"><center><p>a deserted commercial street.</p></center></td>
+          </tr>
+        </table>
+        <!-- <br />
+        <table style="width:100%">
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/300_living.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/300_living_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/001_garden.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/001_garden_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/304_living.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/304_living_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/002_garden.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/002_garden_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a cozy living room.</p></center></td>
+            <td style="width: 50%;"><center><p>a beautiful garden.</p></center></td>
+          </tr>
+        </table> -->
+
+
+        <br />
+        <h3 class="title is-5" style="text-align:left">3D Scenes in Artistic Styles</h3>
+        <!-- line 1 -->
+        <table style="width:100%">
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/950_venezia.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/950_venezia_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/960_future.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/960_future_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>venezia in oil painting style.</p></center></td>
+            <td style="width: 50%;"><center><p>future city in Surrealism style.</p></center></td>
+          </tr>
+        </table>
+        <br />
+        <!-- line 2 -->
+        <table style="width:100%">
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/970_unicorn.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/970_unicorn_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/961_future.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/961_future_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+        <table style="width:100%">
+          <tr>
+            <td style="width: 50%;"><center><p>a unicorn in a forest, CG style.</p></center></td>
+            <td style="width: 50%;"><center><p>future city in Surrealism style.</p></center></td>
+          </tr>
+        </table>
+
+        <br />
+        <h3 class="title is-5" style="text-align:left">360-Degree Scenes</h3>
+        <table style="width:100%">
+          <!-- line 1 -->
+          <tr>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/c_garden1.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/c_garden1_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/c_garden2.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+              <td style="width: 25%;"><center>
+                <video poster="" autoplay controls muted loop playsinline height="90%" width="90%">
+                  <source src="./static/video/c_garden2_d.mp4"
+                          type="video/mp4">
+                </video>
+              </center></td>
+          </tr>
+        </table>
+
+
+
+      </div>
+    </div>
+
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <br />
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/mMdCMaqgdtk" 
+          title="YouTube video player" frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen></iframe>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <!-- <pre><code>@article{zhang2022fdnerf,
+      title={FDNeRF: Few-shot Dynamic Neural Radiance Fields for Face Reconstruction and Expression Editing},
+      author={Zhang, Jingbo and Li, Xiaoyu and Wan, Ziyu and Wang, Can and Liao, Jing},
+      journal={arXiv preprint arXiv:2208.05751},
+      year={2022}
+    }</code></pre> -->
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+
+    <div class="content has-text-centered">
+      <a class="icon-link"
+        href="https://arxiv.org/pdf/2208.05751.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" 
+        href="https://github.com/FDNeRF/FDNeRF" 
+        class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+
+            The <a href="https://github.com/nerfies/nerfies.github.io">source code</a> for the website 
+            was taken from Nerfies. We appreciate the authors sharing the templates with us.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
